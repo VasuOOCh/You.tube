@@ -16,5 +16,5 @@ const commentSchema = new mongoose.Schema({
 
 }, {timestamps : true});
 
-const User = mongoose.Model("User", userSchmma);
-export default User;
+const Comment = mongoose.model("Comment", commentSchema);
+export default Comment;
