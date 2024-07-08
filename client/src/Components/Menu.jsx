@@ -17,17 +17,28 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import VideoLibrary from "@mui/icons-material/VideoLibrary";
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
-    flex: 1;
-    background-color : #202020;
+    flex: 1.2;
+    background-color :${({theme}) => theme.bg};
     height: 100vh;
-    color: white;
+    color: ${({theme}) => theme.text};
     font-size: 14px;
     overflow-y: scroll;
+    position: sticky;
+    top: 0;
 
     &::-webkit-scrollbar{
-        width: 0;
+        width: 7px;
+    }
+    &::-webkit-scrollbar-track {
+    background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
     }
 `
 
@@ -53,14 +64,19 @@ const Item = styled.div`
     gap: 10px;
     align-items: center;
     padding: 7.5px 0px;
+    cursor: pointer;
 
 `
 const Hr = styled.hr`
     margin: 15px 0px;
-    border: 0.5px solid #373737;
+    border: 0.5px solid ${({theme}) => theme.soft};
 `
 
-const Login = styled.div``
+const Login = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+`
 const Button = styled.button`
     display: flex;
     align-items: center;
@@ -76,14 +92,15 @@ const Button = styled.button`
 
 `
 
-export default function Menu() {
+export default function Menu({setDarkMode,darkMode}) {
     return (
         <Container>
             <Wrapper>
+                <Link to={'/'} style={{textDecoration: "none",color: "inherit"}}>
                 <Logo>
                     <Img src={LogoImg} />
-                    LamaTube
-                </Logo>
+                    YouTube
+                </Logo></Link>
                 <Item>
                     <HomeIcon />
                     Home
@@ -151,9 +168,9 @@ export default function Menu() {
                     <HelpOutlineIcon />
                     Help
                 </Item>
-                <Item >
+                <Item onClick={() => {setDarkMode(!darkMode)}}>
                     <SettingsBrightnessIcon />
-                    Light Mode
+                    {darkMode ? "LightMode" : "DarkMode"}
                 </Item>
 
             </Wrapper>
