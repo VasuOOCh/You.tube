@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import Home from './pages/Home'
 import Video from './pages/Video'
+import Signin from './pages/Signin'
 
 
 const Container = styled.div`
@@ -26,7 +27,7 @@ const Main = styled.div`
 `
 
 const Wrapper = styled.div`
-  padding: 22px 96px;
+  padding: 22px 40px;
 `
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
               <Routes>
                 <Route path='/'>
                   <Route index element={<Home/>} />
+                  <Route path='signin' element={<Signin/>} />
                   <Route path='video' >
                     <Route path=':id' element={<Video/>} />
                   </Route>

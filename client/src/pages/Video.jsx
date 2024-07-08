@@ -5,6 +5,8 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import ReplyIcon from '@mui/icons-material/Reply';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
+import Comments from "../Components/Comments";
+import Card from "../Components/Card";
 
 const Container = styled.div`
     display: flex;
@@ -100,7 +102,7 @@ export default function Video() {
         <Container>
             <Content>
                 <VideoWrapper>
-                    <iframe width="914" height="514" src="https://www.youtube.com/embed/LVhr4VWqUxQ" title="A WEEK IN SINGAPORE 🇸🇬" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <iframe width="100%" height="450px" src="https://www.youtube.com/embed/LVhr4VWqUxQ" title="A WEEK IN SINGAPORE 🇸🇬" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </VideoWrapper>
                 <Title>Test Video</Title>
                 <Details>
@@ -136,9 +138,19 @@ export default function Video() {
                     </ChannelInfo>
                     <Subscribe>SUBSCRIBE</Subscribe>
                 </Channel>
+                <Hr/>
+                <Comments />
             </Content>
             <Recommendation>
-                Rec
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
             </Recommendation>
         </Container>
     )

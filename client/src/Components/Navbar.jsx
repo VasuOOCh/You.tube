@@ -1,11 +1,12 @@
 import styled from "styled-components"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
     position: sticky;
     top: 0;
-    background-color: ${({theme}) => theme.bgLighter};
+    background-color: ${({theme}) => theme.bg};
     height: 56px;
 `
 const Wrapper = styled.div`
@@ -71,10 +72,12 @@ export default function Navbar() {
                     <Input placeholder="Search"/>
                     <SearchIcon />
                 </Search>
+                <Link to={'/signin'} style={{textDecoration : "none", color : "inherit"}}>
                 <Button>
                     <AccountCircleIcon />
                     SIGN IN
                 </Button>
+                </Link>
             </Wrapper>
         </Container>
     )
