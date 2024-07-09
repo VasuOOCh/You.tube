@@ -1,4 +1,5 @@
 import { createError } from "../error.js";
+import User from "../models/User.js";
 import Video from "../models/Video.js";
 
 export const addVideo = async (req,res,next) => {
@@ -93,17 +94,9 @@ export const addView = async (req,res,next) => {
 
 export const trend = async (req,res,next) => {
     try {
-        // console.log(req.params);
-
-        const video = await Video.findById(req.params.id)
-        // console.log(video);
-        if(!video) return next(createError(404,"No such video exists"))
-
-        if(req.user.userId != video.userId) return next(createError(401, "Not authorized | cannot delete video"))
-        
-        await Video.findByIdAndDelete(req.params.id)
-
-        res.status(200).json("video deleted")
+        const videos = await Video.find().sort({views : -1})
+        // console.log(videos); 
+        res.status(200).json(videos)
     } catch (error) {
         next(error)
     }
@@ -112,17 +105,9 @@ export const trend = async (req,res,next) => {
 
 export const random = async (req,res,next) => {
     try {
-        // console.log(req.params);
-
-        const video = await Video.findById(req.params.id)
-        // console.log(video);
-        if(!video) return next(createError(404,"No such video exists"))
-
-        if(req.user.userId != video.userId) return next(createError(401, "Not authorized | cannot delete video"))
-        
-        await Video.findByIdAndDelete(req.params.id)
-
-        res.status(200).json("video deleted")
+        const videos = await Video.aggregate([{$sample : {size : 40}}])
+        // console.log(videos); 
+        res.status(200).json(videos)
     } catch (error) {
         next(error)
     }
@@ -131,17 +116,42 @@ export const random = async (req,res,next) => {
 
 export const subVideos = async (req,res,next) => {
     try {
-        // console.log(req.params);
+        const user =await User.findById(req.user.userId);
+        console.log(user);
 
-        const video = await Video.findById(req.params.id)
-        // console.log(video);
-        if(!video) return next(createError(404,"No such video exists"))
+        const videos = await Video.find({
+            userId : { $in : user.subscribedUsers}
+        })
+        console.log(videos);
+        res.status(200).json(videos.sort((a,b) => b.createdAt - a.createdAt))
+    } catch (error) {
+        next(error)
+    }
+}
 
-        if(req.user.userId != video.userId) return next(createError(401, "Not authorized | cannot delete video"))
-        
-        await Video.findByIdAndDelete(req.params.id)
+export const getByTags = async (req,res,next) => {
+    try {
+        const tags = req.query.tags.split(',');
+        // console.log(tags);
+        const videos = await Video.find({
+            tags : {$in : tags}
+        }).limit(20)
+        // console.log(videos); 
+        res.status(200).json(videos)
+    } catch (error) {
+        next(error)
+    }
+}
 
-        res.status(200).json("video deleted")
+export const search = async (req,res,next) => {
+    try {
+        const query = req.query.q;
+        console.log(query);
+        const videos = await Video.find({
+            title : {$regex : query, $options : "i"}
+        }).limit(40)
+        // console.log(videos); 
+        res.status(200).json(videos)
     } catch (error) {
         next(error)
     }
